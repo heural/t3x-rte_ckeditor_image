@@ -1,17 +1,4 @@
 <?php
-/**
- * See class comment
- *
- * PHP version 7
- *
- * @category   Netresearch
- * @package    RteCKEditor
- * @subpackage Controller
- * @author     Christian Opitz <christian.opitz@netresearch.de>
- * @license    http://www.netresearch.de Netresearch Copyright
- * @link       http://www.netresearch.de
- */
-
 
 namespace Netresearch\RteCKEditorImage\Controller;
 
@@ -26,18 +13,7 @@ use TYPO3\CMS\Core\Resource\ProcessedFile;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\HttpUtility;
 
-/**
- * Controller for the image select wizard
- *
- * PHP version 5
- *
- * @category   Netresearch
- * @package    RteCKEditor
- * @subpackage Controller
- * @author     Christian Opitz <christian.opitz@netresearch.de>
- * @license    http://www.gnu.de/documents/gpl-2.0.de.html GPL 2.0+
- * @link       http://www.netresearch.de
- */
+
 class SelectImageController extends ElementBrowserController
 {
     protected $isInfoAction;
@@ -63,18 +39,17 @@ class SelectImageController extends ElementBrowserController
      * @param ResponseInterface $response
      * @return NULL|ResponseInterface
      */
-    public function mainAction(ServerRequestInterface $request, ResponseInterface $response)
+    public function initAction(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         return $this->isInfoAction
             ? $this->infoAction($request, $response)
-            : parent::mainAction($request, $response);
+            : parent::mainAction($request);
     }
 
     /**
      * Retrieve image info
      *
      * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
      * @return NULL|ResponseInterface
      */
     public function infoAction(ServerRequestInterface $request, ResponseInterface $response)
@@ -90,8 +65,9 @@ class SelectImageController extends ElementBrowserController
         $lang = $this->getLanguageService();
         $this->getLanguageService()->includeLLFile('EXT:lang/Resources/Private/Language/locallang_core.xlf');
         $this->getLanguageService()->includeLLFile('EXT:frontend/Resources/Private/Language/locallang_ttc.xlf');
-
-        echo json_encode([
+    
+        $response->getBody()->write(
+            json_encode([
             'uid' => $file->getUid(),
             'alt' => $file->getProperty('alternative'),
             'title' => $file->getProperty('title'),
@@ -108,9 +84,11 @@ class SelectImageController extends ElementBrowserController
                 'overrideNoDefault' => $lang->getLL('labels.placeholder.override_not_available'),
                 'zoom' => $lang->getLL('image_zoom_formlabel')
             ]
-        ]);
+            ])
+        );
 
-        return null;
+        return $response;
+
     }
 
     /**

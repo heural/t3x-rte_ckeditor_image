@@ -9,11 +9,11 @@ $EM_CONF[$_EXTKEY] = [
     'clearCacheOnLoad' => 0,
     'author' => 'Christian Opitz',
     'author_email' => 'christian.opitz@netresearch.de',
-    'version' => '8.7.4',
+    'version' => '8.7.5',
     'constraints' => [
         'depends' => [
-            'typo3' => '8.7.0-8.7.99',
-            'rte_ckeditor' => '8.7.0-8.7.99',
+            'typo3' => '8.7.0-9.3.99',
+            'rte_ckeditor' => '8.7.0-9.3.99',
         ],
         'conflicts' => [],
         'suggests' => [

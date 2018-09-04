@@ -187,18 +187,19 @@
                 size: Modal.sizes.large,
                 callback: function(currentModal) {
                     currentModal.find('iframe').on('load', function (e) {
-                        e.currentTarget.contentWindow.opener = {
+                        jQuery.extend(window, 
+                        {
                             focus: function () {
                                 editor.focus();
                             },
-                            top: window.top,
+                            //top: window.top,
                             onSelected: function(editorName, table, uid, type) {
                                 if (editorName === editor.name) {
                                     $modal.modal('hide');
                                     deferred.resolve(table, uid);
                                 }
                             }
-                        };
+                        });
                     });
                 }
             });
